@@ -1,0 +1,140 @@
+{
+  "info": {
+    "_postman_id": "040435b9-a99b-4be9-a33a-cd4b7bf019d9",
+    "name": "260129-apitest",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51158779",
+    "_collection_link": "https://go.postman.co/collection/51158779-040435b9-a99b-4be9-a33a-cd4b7bf019d9?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "게시글 조회",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"응답 데이터가 iterationData와 완전히 일치한다\", function () {\r",
+              "\r",
+              "  // 1️⃣ 서버 응답 Body를 JSON 객체로 파싱\r",
+              "  // GET /posts/1 이므로 배열이 아니라 객체임\r",
+              "  const responseData = pm.response.json();\r",
+              "\r",
+              "  // 2️⃣ Collection Runner에 업로드한 JSON 파일에서\r",
+              "  // 현재 iteration의 값들을 가져옴\r",
+              "  //\r",
+              "  // iterationData는 \"한 row\" 기준이라\r",
+              "  // 배열이 아닌 객체 형태로 접근함\r",
+              "  const expectedData = {\r",
+              "    userId: pm.iterationData.get(\"userId\"),\r",
+              "    id: pm.iterationData.get(\"id\"),\r",
+              "    title: pm.iterationData.get(\"title\"),\r",
+              "    body: pm.iterationData.get(\"body\")\r",
+              "  };\r",
+              "\r",
+              "  // 3️⃣ 응답 데이터와 iterationData를 깊은 비교(eql)\r",
+              "  // 값 + 타입까지 전부 동일해야 통과\r",
+              "  pm.expect(responseData).to.eql(expectedData);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "url": {
+          "raw": "{{JSON_HOLDER}}/posts/1",
+          "host": [
+            "{{JSON_HOLDER}}"
+          ],
+          "path": [
+            "posts",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "게시글 등록",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"api_test_title\",\r\n    \"body\": \"api_test_body\",\r\n    \"userId\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{JSON_HOLDER}}/posts",
+          "host": [
+            "{{JSON_HOLDER}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "게시글 수정",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"api_updated_title\",\r\n    \"body\": \"api_updated_body\",\r\n    \"userId\": 1\r\n}"
+        },
+        "url": {
+          "raw": "{{JSON_HOLDER}}/posts/1",
+          "host": [
+            "{{JSON_HOLDER}}"
+          ],
+          "path": [
+            "posts",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "게시글 삭제",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"api_updated_title\",\r\n    \"body\": \"api_updated_body\",\r\n    \"userId\": 1\r\n}"
+        },
+        "url": {
+          "raw": "{{JSON_HOLDER}}/posts/1",
+          "host": [
+            "{{JSON_HOLDER}}"
+          ],
+          "path": [
+            "posts",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
